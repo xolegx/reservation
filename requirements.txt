@@ -3,3 +3,4 @@ uvicorn
 sqlalchemy~=2.0.40
 psycopg2-binary
 pydantic~=2.11.3
+pydantic-settings

@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from routers import tables, reservations
+from app.routers import tables, reservations
 
 app = FastAPI()
 
