@@ -11,10 +11,10 @@ services:
     depends_on:
       - db
     environment:
-      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/postgres
+      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@localhost:5432/postgres
 
   db:
-    image: postgres:13
+    image: postgres:15
     environment:
       POSTGRES_DB: postgres
       POSTGRES_USER: postgres
