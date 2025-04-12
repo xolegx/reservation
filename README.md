@@ -60,16 +60,15 @@
 2. Клонируйте репозиторий:
 
    ```bash
-   git clone  https://github.com/xolegx/reservation.git 
-   cd  app
+   git clone https://github.com/xolegx/reservation.git 
+   cd app
    ```
 
 3. Создайте файл `.env` в корне проекта и укажите настройки вашей базы данных:
 
    ```
-   POSTGRES_USER=postgres
-   POSTGRES_PASSWORD=postgres
-   POSTGRES_DB=postgres
+   DB_USER=postgres
+   DB_PASS=postgres
    ```
 
 4. Запустите приложение с помощью Docker Compose:
