@@ -1,4 +1,5 @@
 from sqlalchemy import select
+from fastapi import HTTPException
 
 from app.database import async_session_maker
 
@@ -22,5 +23,5 @@ class BaseDAO:
             if record:
                 await session.delete(record)
                 await session.commit()
-                return {"message": "Успешное удаление столика"}
-            return {"message": "Столик не найден!"}
+                return {"message": "Successful delete!"}
+            raise HTTPException(status_code=400, detail="Id not found")

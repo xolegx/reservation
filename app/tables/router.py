@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 
 from app.database import async_session_maker
 from app.tables.dao import TablesDAO
@@ -16,9 +16,13 @@ async def create_table(table: STableCreate):
     async with async_session_maker() as session:
         new_table = Table(**table.dict())
         session.add(new_table)
-        await session.commit()
-        await session.refresh(new_table)
-        return new_table
+        try:
+            await session.commit()
+            await session.refresh(new_table)
+            return new_table
+        except Exception as e:
+            await session.rollback()
+            raise HTTPException(status_code=400, detail=str(e))
 
 
 @router.get("/", response_model=list[STable])
