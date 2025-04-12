@@ -1,25 +1,23 @@
+
 version: '3.8'
 
 services:
-  db:
-    image: postgres:15
-    restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: reserv_db
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-
   web:
     build: .
-    restart: always
     ports:
       - "8000:8000"
+    volumes:
+      - .:/app
     depends_on:
       - db
     environment:
-      DATABASE_URL: postgres://postgres:postgres@db/reserv_db
+      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/postgres
 
-volumes:
-  postgres_data:
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"

@@ -1,4 +1,4 @@
-from datetime import timedelta, timezone
+from datetime import timedelta
 
 from fastapi import APIRouter, HTTPException
 from sqlalchemy import select
@@ -29,7 +29,6 @@ async def create_reservation(reservation: SReservationCreate):
 
         result = await session.execute(existing_reservation_query)
         existing_reservation = result.scalars().first()
-
         if existing_reservation:
             raise HTTPException(status_code=400, detail="Стол уже занят на это время.")
 
