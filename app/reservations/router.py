@@ -1,4 +1,5 @@
 from datetime import timedelta
+import logging
 
 from fastapi import APIRouter, HTTPException
 from sqlalchemy import select
@@ -8,6 +9,10 @@ from app.reservations.dao import ReservationsDAO
 from app.reservations.models import Reservation
 from app.reservations.schemas import SReservation, SReservationCreate
 
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO,
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
 router = APIRouter(
     prefix="/reservations",
     tags=["Бронирование"]
@@ -16,6 +21,7 @@ router = APIRouter(
 
 @router.post("/", response_model=SReservation)
 async def create_reservation(reservation: SReservationCreate):
+    logger.info(f"Creating reservation: {reservation}")
     async with async_session_maker() as session:
         naive_reservation_time = reservation.reservation_time.replace(tzinfo=None)
         start_time = naive_reservation_time
@@ -44,6 +50,7 @@ async def create_reservation(reservation: SReservationCreate):
             await session.refresh(new_reservation)
             return new_reservation
         except Exception as e:
+            logger.error(f"Error occurred: {e}")
             await session.rollback()
             raise HTTPException(status_code=400, detail=str(e))
 
