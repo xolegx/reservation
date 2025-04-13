@@ -71,11 +71,17 @@
    DB_PASS=postgres
    ```
 
-4. Запустите приложение с помощью Docker Compose:
+4. Запуск миграций через Docker
+
+   ```bash
+   docker-compose exec app alembic upgrade head
+   ```
+
+6. Запустите приложение с помощью Docker Compose:
 
    ```bash
    docker-compose up --build
    ```
 
-5. После успешного запуска API будет доступно по адресу: `http://localhost:8000`.
+7. После успешного запуска API будет доступно по адресу: `http://localhost:8000`.
 
